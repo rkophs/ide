@@ -1,0 +1,24 @@
+<div class="main" ng-init="init()" ng-cloak>
+    <div class="left">
+        <file-box></file-box>
+    </div>
+    <div class="right">
+        <div ng-repeat="panel in data.editors" class="panel-box" style="width:{{data.editor_width}}%;">
+            <div class="shadow panel-editor">
+                <div class="editor-top">
+                    <h4 style="float:left;"><strong>{{panel.filename}}</strong></h4>
+                    <button type="button" ng-click="delete_panel(panel.it)" class="btn btn-info btn-sm button-text-align" id="editor-{{panel.it}}-close">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <button type="button" class="btn btn-info btn-sm button-text-align" id="editor-{{panel.it}}-save">
+                        <span class="glyphicon glyphicon-floppy-save"></span>
+                    </button>
+                    <button type="button" ng-click="select_language(panel.id)" class="btn btn-info  btn-sm button-text-align" style="border: none; background-color: {{set_color(panel.language)}}" id="editor-{{panel.it}}-mode">Syntax: {{get_language_title(panel.language)}}</button>
+                </div>
+                <div class="editor-bottom">
+                    <file-editor data-it="{{panel.it}}"></file-editor>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
