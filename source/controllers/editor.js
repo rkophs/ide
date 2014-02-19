@@ -1,51 +1,71 @@
 define(['jquery', 'underscore', 'modules/controller', 'text!config/languages.json', 'shared'],
     function ($, _, controllers, languages) {
-    'use strict';
+        'use strict';
 
-    controllers.controller('Editor', function ($scope) {
+        controllers.controller('Editor', function ($scope) {
 
-        var _d = {
-            languages: JSON.parse(languages),
-            editors: [],
-            editor_margin: 10,
-            editor_width: 100
-        };
+            $scope.data = {
+                languages: JSON.parse(languages),
+                editors: [],
+                editor_margin: 10,
+                editor_width: 100,
+                next_it: 0
+            };
 
-        $scope.init = function(){
-            $scope.data = {};
-            _.defaults($scope.data, _d);
-        };
+            $scope.add_panel = function (obj) {
+                var new_count = $scope.data.editors.length + 1;
+                $scope.data.editor_width = (100 / new_count);
 
-        $scope.init_ace = function(id){
-            return "<div>HELLO THERE</div>"
-        }
+                $scope.data.next_it++;
+                obj.it = $scope.data.next_it;
+                obj.ribbon = false;
+                $scope.data.editors.push(obj);
+            };
 
-        $scope.add_panel = function(obj){
-            var new_count = $scope.data.editors.length + 1;
-            $scope.data.editor_width = (100 / new_count);
+            $scope.delete_panel = function (it) {
+                var editor = _.findWhere($scope.data.editors, {it: it});
+                var message = {
+                    action: "close",
+                    language: editor.language,
+                    name: editor.name,
+                    same_window: true
+                };
 
-            obj.it = new_count - 1;
-            $scope.data.editors.push(obj);
+                $scope.data.editors = _.without($scope.data.editors, editor);
+                var count = $scope.data.editors.length;
+                $scope.data.editor_width = (100 / count);
 
-        };
+                $scope.$emit('file', message);
+            };
 
-        $scope.delete_panel = function(it) {
-            $scope.data.editors = _.without($scope.data.editors,
-                _.findWhere($scope.data.editors, {it: it}));
-            var count = $scope.data.editors.length;
-            $scope.data.editor_width = (100 / count);
-        };
+            $scope.toggle_settings_ribbon = function (it) {
+                var ribbon = $('#ribbon-' + it);
+                var editor = _.findWhere($scope.data.editors, {it: it});
+                if(editor.ribbon){
+                    ribbon.fadeOut(300);
+                } else {
+                    ribbon.fadeIn(300);
+                }
+                editor.ribbon = editor.ribbon ? false : true;
+            };
 
-        $scope.set_color = function(id){
-            return getRGB(id);
-        }
+            $scope.set_color = function (id) {
+                return getRGB(id);
+            };
 
-        $scope.get_language_title = function(id){
-            return $scope.data.languages[id].title;
-        }
+            $scope.get_language_title = function (id) {
+                return $scope.data.languages[id].title;
+            };
 
-        $scope.$onRootScope('file', function(event, message){
-            $scope.add_panel(message);
+            $scope.select_language = function(it){
+                console.log(it);
+            }
+
+            $scope.$onRootScope('file', function (event, message) {
+                if(message.action === 'open'){
+                    $scope.add_panel(message);
+                }
+            });
+
         });
     });
-});

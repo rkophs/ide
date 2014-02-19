@@ -10,9 +10,9 @@ define(['jquery', 'modules/directive', 'ace'], function ($, directives) {
                 $(el).attr("id", "editor" + attrs.it);
 
                 var editor = ace.edit( "editor" + attrs.it);
-                editor.setTheme("ace/theme/twilight")
-                editor.getSession().setMode("ace/mode/json")
-                scope.$parent.data.editors[attrs.it].ace = editor;
+                editor.setTheme("ace/theme/twilight");
+                editor.getSession().setMode("ace/mode/json");
+                _.findWhere(scope.$parent.data.editors, {it: parseInt(attrs.it)}).ace = editor;
             }
         };
     });

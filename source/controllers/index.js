@@ -1,4 +1,5 @@
 define([
     'controllers/editor',
-    'controllers/filePicker'
+    'controllers/fileSelector',
+    'controllers/navigation'
 ], function () {});

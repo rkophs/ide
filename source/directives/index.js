@@ -1,4 +1,4 @@
 define([
-    'directives/file-box',
-    'directives/file-editor'],
+    'directives/file-editor',
+    'directives/nav-bar'],
     function () {});

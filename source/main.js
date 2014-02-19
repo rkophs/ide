@@ -8,7 +8,8 @@ require.config({
         'underscore': '../lib/underscore/underscore.min',
         'text' : '../lib/require/text',
         'shared' : '../lib/shared/shared',
-        'ace' : '../lib/ace/src-min/ace'
+        'ace' : '../lib/ace/src-min/ace',
+        'd3' : '../lib/d3/d3.min'
     },
 
     shim: {
@@ -24,8 +25,7 @@ require.config({
         'underscore': {
             exports: '_'
         }
-    },
-
+    }
 });
 
 

@@ -1,9 +1,9 @@
 define(['modules/directive'], function (directives) {
     'use strict';
-    directives.directive('fileBox', function () {
+    directives.directive('navBar', function () {
         return {
             restrict: 'E',
-            templateUrl: 'source/templates/file-box.html'
+            templateUrl: 'source/templates/nav-bar.html'
         };
     });
 });
